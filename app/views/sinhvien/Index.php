@@ -7,7 +7,24 @@
     <title>Danh sách sinh viên</title>
 </head>
 <body>
-    <h1>Danh sách sinh viên</h1>
+    <h1><?php echo $title; ?> </h1>
+    <table>
+
+        <tr>
+            <th>STT</th>
+            <th>Họ tên</th>
+            <th>Giới tính</th>
+            <th>MSSV</th>
+        </tr>
+        <?php foreach ($sinhviens as $sv): ?>
+            <tr>
+                <td><?php echo $sv['id']; ?></td>
+                <td><?php echo $sv['hoten']; ?></td>
+                <td><?php echo $sv['gioitinh']; ?></td>
+                <td><?php echo $sv['mssv']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 </body>
 </html>
 
