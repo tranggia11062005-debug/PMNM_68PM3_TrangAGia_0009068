@@ -9,6 +9,7 @@ class home
   public function about()
   {
     echo "Đây là trang giới thiệu";
+    require_once '../app/views/layout/masterlayout.php';
   }
   public function login()
   {
