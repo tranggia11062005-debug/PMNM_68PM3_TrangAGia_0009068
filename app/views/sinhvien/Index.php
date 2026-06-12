@@ -92,7 +92,7 @@ border-bottom: none;
 <th>MSSV</th>
 <th>Họ tên</th>
 <th>Giới tính</th>
-            <th>Hành động</th>
+<th>Hành động</th>
 </tr>
 
     <?php foreach ($sinhvien as $index => $sinhvien): ?>
@@ -100,19 +100,19 @@ border-bottom: none;
 <tr>
             <td><?php echo $index + 1; ?></td>
             <td><?php echo $sinhvien['ID']; ?></td>
-<td><?php echo $sinhvien['MSSV']; ?></td>
-<td><?php echo $sinhvien['Hoten']; ?></td>
-<td><?php echo $sinhvien['Gioitinh']; ?></td>
+            <td><?php echo $sinhvien['MSSV']; ?></td>
+            <td><?php echo $sinhvien['Hoten']; ?></td>
+            <td><?php echo $sinhvien['Gioitinh']; ?></td>
             <td>
-                    <a href="/sinhvien/edit/<?php echo $sinhvien['ID']; ?>" class="btn-edit">
+                <a href="/sinhvien/edit/<?php echo $sinhvien['ID']; ?>" class="btn-edit">
                         Sửa
-                    </a>
+                </a>
 
-                    <a href="/sinhvien/delete/<?php echo $sinhvien['ID']; ?>" class="btn-delete"
+                <a href="/sinhvien/delete/<?php echo $sinhvien['ID']; ?>" class="btn-delete"
                         onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')">
                         Xóa
-                    </a>
-                </td>
+                </a>
+            </td>
 </tr>
 <?php endforeach; ?>
 

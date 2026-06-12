@@ -1,7 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>create</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm sinh viên</title>
     <style>
         * {
@@ -104,10 +105,10 @@
     </style>
 </head>
 <body>
-    <h1>thêm sinh viên</h1>
     <div class="container">
         <h1>Thêm Sinh Viên</h1>
         
+        <form action="/PMNM_68PM3_TrieuHuongGiang_0009168/sinhvien/store" method="post">
         <form action="/sinhvien/store" method="post">
             <div class="form-group">
                 <label for="ma_sv">Mã sinh viên</label>

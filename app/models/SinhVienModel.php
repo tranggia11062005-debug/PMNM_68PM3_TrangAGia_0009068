@@ -1,65 +1,140 @@
 <?php
-require_once '../App/core/DB.php';
-class SinhvienModel{
-private $conn;
-public function __construct(){
-$this->conn = ConnectDB::Connect();
-}
-public function getAllSinhvien(){
-$query = "SELECT * FROM sinhvien";
-$stmt = $this->conn->prepare($query);
-$stmt->execute();
-return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-public function create($data){
-        $query = "INSERT INTO sinhvien (mssv, hoten, gioitinh) VALUES (:mssv, :hoten, :gioitinh)";
-        $query = "INSERT INTO sinhvien (MSSV, HoTen, GioiTinh) VALUES (:mssv, :hoten, :gioitinh)";
-$stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':mssv', $data['mssv']);
-        $stmt->bindParam(':hoten', $data['hoten']);
-        $stmt->bindParam(':gioitinh', $data['gioitinh']);
-if($stmt->execute()){
-return true;
-} else {
-return false;
-}
-}
-    // public function paging($limit = 5, $offset = 0, $search = ''){
-    //     $query = "SELECT * FROM sinhvien LIMIT :limit OFFSET :offset";
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-    //     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    require_once  '../app/core/DB.php';
 
-    //     //tính tổng số bản ghi
-    //     $selectAllquery = $this->conn->prepare("SELECT COUNT(*) FROM sinhvien");
-    //     $totalRecord= $selectAllquery->fetchColumn();
+    class sinhvienModel {
+        private $conn;
 
-    //     $totalPage = ceil($totalRecord/$totalPage);
+        public function __construct() {
+           $this->conn = ConnectDB::connect();
+        }
+        public function getAllSinhVien() {
+            $query = "SELECT * FROM sinhvien";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+       public function create($data) {
+    $query = "INSERT INTO sinhvien 
+    (ma_sv, ho_ten, gioi_tinh, ngay_sinh, dia_chi, lop)
+    VALUES (:ma_sv, :ho_ten, :gioi_tinh, :ngay_sinh, :dia_chi, :lop)";
 
-    //     return ["sinhvien"=>$result, "totalPage"=>$totalPage];
-    // }
-
-    public function paging($limit = 5, $offset = 0, $search = ''){
-    $query = "SELECT * FROM sinhvien LIMIT :limit OFFSET :offset";
     $stmt = $this->conn->prepare($query);
 
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $ok = $stmt->execute([
+        ':ma_sv' => $data['ma_sv'],
+        ':ho_ten' => $data['ho_ten'],
+        ':gioi_tinh' => $data['gioi_tinh'],
+        ':ngay_sinh' => $data['ngay_sinh'],
+        ':dia_chi' => $data['dia_chi'],
+        ':lop' => $data['lop']
+    ]);
+
+    if (!$ok) {
+        echo "SQL ERROR:<br>";
+        print_r($stmt->errorInfo());
+        die;
+require_once '../app/core/DB.php';
+
+class sinhvienModel
+{
+    private $conn;
+
+    public function __construct()
+    {
+        $this->conn = ConnectDB::connect();
+}
+
+    return $ok;
+}
+    public function paging($limit, $offset, $search)
+    {
+        $query = "SELECT * FROM sinhvien 
+                  WHERE ho_ten LIKE :search
+                  ORDER BY id ASC
+                  LIMIT :limit OFFSET :offset";
+
+      public function paging($limit = 5, $offset = 0, $search = '')
+{
+    $query = "SELECT * FROM sinhvien 
+              WHERE ho_ten LIKE :search
+              ORDER BY id ASC
+              LIMIT :limit OFFSET :offset";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':search', "%$search%");
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $count = $this->conn->prepare("SELECT COUNT(*) FROM sinhvien WHERE ho_ten LIKE :search");
+        $count->bindValue(':search', "%$search%");
+        $count->execute();
+
+        $total = $count->fetchColumn();
+
+    $stmt = $this->conn->prepare($query);
+        return [
+            'sinhviens' => $data,
+            'totalPages' => ceil($total / $limit)
+        ];
+    }
+
+    $stmt->bindValue(':search', "%$search%");
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+    public function create($data)
+    {
+        $sql = "INSERT INTO sinhvien 
+                (ma_sv, ho_ten, gioi_tinh, ngay_sinh, dia_chi, lop)
+                VALUES (:ma_sv, :ho_ten, :gioi_tinh, :ngay_sinh, :dia_chi, :lop)";
 
     $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC); // FIX đặt biến
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->conn->prepare($sql);
 
-    //tính tổng số bản ghi
-    $selectAllquery = $this->conn->query("SELECT COUNT(*) FROM sinhvien");
-    // $selectAllquery->execute(); // FIX thiếu execute
+    $count = $this->conn->prepare("SELECT COUNT(*) FROM sinhvien WHERE ho_ten LIKE :search");
+    $count->bindValue(':search', "%$search%");
+    $count->execute();
+        return $stmt->execute($data);
+    }
 
-    $totalRecord = $selectAllquery->fetchColumn();
+    $totalRecords = $count->fetchColumn();
+    $totalPages = ceil($totalRecords / $limit);
+    public function delete($id)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM sinhvien WHERE id = :id");
+        return $stmt->execute([':id' => $id]);
+    }
 
-    $totalPage = ceil($totalRecord / $limit); // FIX sai biến
-
-    return ['sinhvien'=>$result, 'totalPage'=>$totalPage]; // FIX result
+    return [
+        'sinhviens' => $result,
+        'totalPages' => $totalPages
+    ];
 }
 }
+    public function edit($id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM sinhvien WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 ?>
+    public function update($id, $data)
+    {
+        $sql = "UPDATE sinhvien SET 
+                ma_sv = :ma_sv,
+                ho_ten = :ho_ten,
+                gioi_tinh = :gioi_tinh,
+                ngay_sinh = :ngay_sinh,
+                dia_chi = :dia_chi,
+                lop = :lop
+                WHERE id = :id";
+
+        $data[':id'] = $id;
+
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
+}
