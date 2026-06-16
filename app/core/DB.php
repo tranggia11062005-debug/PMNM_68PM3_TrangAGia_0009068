@@ -3,7 +3,7 @@ class connectDB {
 
     private static $host = "localhost";
     private static $username = "root";
-    private static $password = "";
+    private static $password = "Agia123456789@";
     private static $db_name = "68pm34";
 
     public static function Connect() {

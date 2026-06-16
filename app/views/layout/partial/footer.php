@@ -1,20 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    style>
-        .footer {
-            width: 100%;
-            height: 60px;
-            background-color: #252599;
-            position: fixed;
-            bottom: 0;
-        }
-     </style>
-</head>
-<body>
-    h2>Footer Content</h2>
-</body>
-</html>
+<footer>
+
+    <p>
+        2026 - Hệ thống Quản lý Sinh viên
+    </p>
+
+</footer>
+
+<style>
+
+footer{
+
+    width:100%;
+    background:#222;
+    color:white;
+    text-align:center;
+
+    padding:18px;
+
+    margin-top:40px;
+
+}
+
+</style>

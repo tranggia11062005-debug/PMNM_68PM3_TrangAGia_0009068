@@ -1,37 +1,54 @@
 <?php
-class auth
-{
-    protected $users = [
-        'admin' => ['password' => 'admin123'],
-    ];
 
+require_once '../app/core/Controller.php';
+
+class Auth extends Controller
+{
     public function login()
     {
-        if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Hiển thị form
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            $this->view('home/login');
+            return;
+        }
 
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+        // Lấy dữ liệu từ form
+        $username = trim($_POST['username']);
+        $password = trim($_POST['password']);
 
-            if (
-                isset($this->users[$username]) &&
-                $this->users[$username]['password'] === $password
-            ) {
+        // Gọi Model
+        $userModel = $this->model('UserModel');
 
+        $user = $userModel->login($username, $password);
+
+        if ($user) {
+
+            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
-                $_SESSION['username'] = $username;
-
-                header('Location:/home/index');
-                exit();
-
-            } else {
-
-                echo "Tên đăng nhập hoặc mật khẩu không đúng";
             }
 
-        } else {
+            $_SESSION['user'] = $user;
+            $_SESSION['username'] = $user['username'];
 
-            require_once '../app/views/home/login.php';
+            header("Location: /PMNM_68PM3_TrangAGia_0009068/public/SinhVien");
+            exit;
         }
+
+        // Sai tài khoản hoặc mật khẩu
+        $this->view('home/login', [
+            'error' => 'Tên đăng nhập hoặc mật khẩu không đúng!'
+        ]);
+    }
+
+    public function logout()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        session_destroy();
+
+        header("Location: /PMNM_68PM3_TrangAGia_0009068/public/Auth/login");
+        exit;
     }
 }
-?>

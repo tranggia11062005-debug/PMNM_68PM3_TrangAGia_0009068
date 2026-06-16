@@ -1,32 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-<style>
-    *{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    .content{
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-</style>
+    <title><?= $title ?? "Quản lý sinh viên" ?></title>
 </head>
+
 <body>
-     <?php require_once '../app/views/layout/partial/header.php'; ?>
-    <div class="content">
-        <?php
-        require_once '../app/views/' . $view . '.php';
-        ?>
-    </div>
-    <?php require_once '../app/views/layout/partial/footer.php'; ?>
+
+<?php require '../app/views/layout/partial/header.php'; ?>
+
+<div class="container">
+
+    <?php
+        require '../app/views/'.$viewname.'.php';
+    ?>
+
+</div>
+
+<?php require '../app/views/layout/partial/footer.php'; ?>
+
 </body>
+
+<style>
+
+body{
+
+    margin:0;
+    background:#f4f4f4;
+
+    font-family:Arial;
+
+}
+
+.container{
+
+    width:90%;
+
+    margin:30px auto;
+
+}
+
+</style>
+
 </html>

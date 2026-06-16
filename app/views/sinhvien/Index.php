@@ -1,134 +1,326 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?php echo $title; ?></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $title ?? "Quản lý sinh viên" ?></title>
 
-<style>
-/* *{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: Arial, Helvetica, sans-serif;
-}
-
-body{
-background: #f4f6f9;
-padding: 40px;
-}
-
-h1{
-text-align: center;
-margin-bottom: 30px;
-color: #333;
-} */
-
-table{
-width: 80%;
-margin: auto;
-border-collapse: collapse;
-background: white;
-box-shadow: 0 0 10px rgba(0,0,0,0.1);
-border-radius: 10px;
-overflow: hidden;
-}
-
-table th{
-background: #007bff;
-color: white;
-padding: 15px;
-text-align: center;
-}
-
-table td{
-padding: 12px;
-text-align: center;
-border-bottom: 1px solid #ddd;
-}
-
-table tr:hover{
-background: #f1f1f1;
-transition: 0.3s;
-}
-
-table tr:last-child td{
-border-bottom: none;
-}
-
-          .pagination {
-            margin-top: 25px;
-            text-align: center;
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
         }
 
-        .pagination a {
-            display: inline-block;
-            padding: 8px 14px;
-            margin: 0 4px;
-            text-decoration: none;
-            color: #4f46e5;
-            background-color: white;
-            border: 1px solid #4f46e5;
-            border-radius: 6px;
-            font-weight: 500;
+        body{
+            background:#f4f6f9;
         }
 
-        .pagination a:hover {
-            background-color: #4f46e5;
-            color: white;
-            transition: 0.2s;
+       .container{
+    width:95%;
+    margin:20px auto;
+}
+
+        h1{
+            text-align:center;
+            color:#333;
+            margin-bottom:30px;
         }
-</style>
+
+        .top{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:20px;
+            flex-wrap:wrap;
+            gap:15px;
+        }
+
+        .search-box{
+            display:flex;
+            gap:10px;
+        }
+
+        .search-box input{
+            width:300px;
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        .search-box button{
+            padding:10px 18px;
+            background:#0d6efd;
+            color:#fff;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        .search-box button:hover{
+            background:#0b5ed7;
+        }
+
+        .btn-add{
+            padding:10px 18px;
+            background:#198754;
+            color:#fff;
+            text-decoration:none;
+            border-radius:5px;
+        }
+
+        .btn-add:hover{
+            background:#157347;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:#fff;
+            box-shadow:0 0 10px rgba(0,0,0,.1);
+        }
+
+        table thead{
+            background:#0d6efd;
+            color:#fff;
+        }
+
+        table th,
+        table td{
+            padding:14px;
+            border:1px solid #ddd;
+            text-align:center;
+        }
+
+        table tbody tr:hover{
+            background:#f5f5f5;
+        }
+
+        .btn-edit{
+            background:#ffc107;
+            color:#000;
+            padding:6px 12px;
+            border-radius:5px;
+            text-decoration:none;
+        }
+
+        .btn-delete{
+            background:#dc3545;
+            color:#fff;
+            padding:6px 12px;
+            border-radius:5px;
+            text-decoration:none;
+            margin-left:5px;
+        }
+
+        .btn-edit:hover{
+            background:#e0a800;
+        }
+
+        .btn-delete:hover{
+            background:#bb2d3b;
+        }
+
+        .pagination{
+            margin-top:30px;
+            text-align:center;
+        }
+
+        .pagination a{
+            display:inline-block;
+            padding:10px 15px;
+            margin:0 5px;
+            border:1px solid #0d6efd;
+            color:#0d6efd;
+            text-decoration:none;
+            border-radius:5px;
+        }
+
+        .pagination a:hover{
+            background:#0d6efd;
+            color:#fff;
+        }
+
+        .success{
+            background:#d1e7dd;
+            color:#0f5132;
+            padding:15px;
+            border-radius:5px;
+            margin-bottom:20px;
+        }
+
+        .error{
+            background:#f8d7da;
+            color:#842029;
+            padding:15px;
+            border-radius:5px;
+            margin-bottom:20px;
+        }
+        .btn-reset{
+    padding:10px 18px;
+    background:#6c757d;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    transition:.3s;
+}
+
+.btn-reset:hover{
+    background:#5a6268;
+}
+        
+    </style>
+
 </head>
 
 <body>
 
-    <h1>Danh sách sinh viên</h1>
-    <h1><?php echo $title; ?></h1>
+<div class="container">
 
-<table>
-<tr>
-<th>ID</th>
-<th>MSSV</th>
-<th>Họ tên</th>
-<th>Giới tính</th>
-<th>Hành động</th>
-</tr>
+    <h1>Quản lý sinh viên</h1>
 
-    <?php foreach ($sinhvien as $index => $sinhvien): ?>
-    <?php foreach ($sinhvien as $sinhvien): ?>
-<tr>
-            <td><?php echo $index + 1; ?></td>
-            <td><?php echo $sinhvien['ID']; ?></td>
-            <td><?php echo $sinhvien['MSSV']; ?></td>
-            <td><?php echo $sinhvien['Hoten']; ?></td>
-            <td><?php echo $sinhvien['Gioitinh']; ?></td>
-            <td>
-                <a href="/sinhvien/edit/<?php echo $sinhvien['ID']; ?>" class="btn-edit">
-                        Sửa
-                </a>
+    <?php if(isset($_SESSION['success'])): ?>
 
-                <a href="/sinhvien/delete/<?php echo $sinhvien['ID']; ?>" class="btn-delete"
-                        onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')">
-                        Xóa
-                </a>
-            </td>
-</tr>
-<?php endforeach; ?>
+        <div class="success">
+            <?= $_SESSION['success']; ?>
+        </div>
 
-</table>
+        <?php unset($_SESSION['success']); ?>
+
+    <?php endif; ?>
+
+
+    <?php if(isset($_SESSION['error'])): ?>
+
+        <div class="error">
+            <?= $_SESSION['error']; ?>
+        </div>
+
+        <?php unset($_SESSION['error']); ?>
+
+    <?php endif; ?>
+
+
+    <div class="top">
+
+        <form class="search-box" method="GET">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Nhập tên sinh viên..."
+                value="<?= htmlspecialchars($search ?? '') ?>">
+
+            <button type="submit">
+                Tìm kiếm
+            </button>
+            <a href="/PMNM_68PM3_TrangAGia_0009068/public/SinhVien"
+       class="btn-reset">
+        Reset
+    </a>
+
+        </form>
+
+        <a class="btn-add"
+           href="/PMNM_68PM3_TrangAGia_0009068/public/SinhVien/create">
+            + Thêm sinh viên
+        </a>
+
+    </div>
+
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Mã SV</th>
+            <th>Họ tên</th>
+            <th>Lớp</th>
+            <th>Ngày sinh</th>
+            <th>Địa chỉ</th>
+            <th>Giới tính</th>
+            <th>Hành động</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <?php if(empty($sinhviens)): ?>
+
+            <tr>
+
+                <td colspan="8">
+
+                    Không có dữ liệu sinh viên.
+
+                </td>
+
+            </tr>
+
+        <?php else: ?>
+
+            <?php foreach($sinhviens as $index => $sv): ?>
+
+                <tr>
+
+                    <td><?= $sv['id'] ?></td>
+
+                    <td><?= $sv['ma_sv'] ?></td>
+
+                    <td><?= $sv['ho_ten'] ?></td>
+
+                    <td><?= $sv['lop'] ?></td>
+
+                    <td><?= $sv['ngay_sinh'] ?></td>
+
+                    <td><?= $sv['dia_chi'] ?></td>
+
+                    <td><?= $sv['gioi_tinh'] ?></td>
+
+                    <td>
+
+                        <a class="btn-edit"
+                           href="/PMNM_68PM3_TrangAGia_0009068/public/SinhVien/edit/<?= $sv['id'] ?>">
+                            Sửa
+                        </a>
+
+                        <a class="btn-delete"
+                           href="/PMNM_68PM3_TrangAGia_0009068/public/SinhVien/delete/<?= $sv['id'] ?>"
+                           onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')">
+                            Xóa
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+
+        </tbody>
+
+    </table>
 
     <div class="pagination">
-        <?php
-        $pagesize = 5;
 
-        for ($i = 1; $i <= $totalPage; $i++) {
-            $offset = ($i - 1) * $pagesize;
+        <?php for($i=1;$i<=$totalPages;$i++): ?>
 
-            echo "<a href='/sinhvien/index/$pagesize/$offset'>$i</a> ";
-            
-        }
-        ?>
+            <a href="?page=<?= $i ?>&search=<?= urlencode($search ?? '') ?>">
+                <?= $i ?>
+            </a>
+
+        <?php endfor; ?>
+
     </div>
+
+</div>
+
 </body>
+
 </html>
