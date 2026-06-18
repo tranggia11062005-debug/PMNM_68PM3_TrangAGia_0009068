@@ -1,5 +1,5 @@
 <?php
-require_once '../app/core/DB.php';
+require_once dirname(__DIR__) . '/core/DB.php';
 class UserModel
 {
     private $conn;

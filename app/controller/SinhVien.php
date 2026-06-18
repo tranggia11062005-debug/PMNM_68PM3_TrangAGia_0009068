@@ -29,11 +29,15 @@ class SinhVien extends Controller
 
    public function create()
 {
+    $lopHocModel = $this->model("LopHocModel");
     $this->view("sinhvien/Create", [
         "title" => "Thêm sinh viên",
         "action" => "store",
-        "sinhvien" => null
+        "sinhvien" => null,
+        "lops" => $lopHocModel->getAll()
+        
     ]);
+    
 }
 
     public function store()
@@ -46,7 +50,7 @@ class SinhVien extends Controller
                 'gioi_tinh' => $_POST['gioi_tinh'],
                 'ngay_sinh' => $_POST['ngay_sinh'],
                 'dia_chi'   => $_POST['dia_chi'],
-                'lop'       => $_POST['lop']
+                'lop_id'       => $_POST['lop_id']
             ];
 
             $model = $this->model('sinhvienModel');
@@ -61,6 +65,7 @@ class SinhVien extends Controller
 
     public function delete($id)
     {
+        $lopHocModel = $this->model("LopHocModel");
         $model = $this->model('sinhvienModel');
         $model->delete($id);
 
@@ -69,6 +74,7 @@ class SinhVien extends Controller
 
     public function edit($id)
 {
+    $lopHocModel = $this->model("LopHocModel");
     $model = $this->model("SinhVienModel");
 
     $sinhvien = $model->edit($id);
@@ -80,7 +86,8 @@ class SinhVien extends Controller
     $this->view("sinhvien/Create", [
         "title" => "Cập nhật sinh viên",
         "action" => "update/" . $id,
-        "sinhvien" => $sinhvien
+        "sinhvien" => $sinhvien,
+        "lops" => $lopHocModel->getAll()
     ]);
 }
 
@@ -94,7 +101,7 @@ class SinhVien extends Controller
                 'gioi_tinh' => $_POST['gioi_tinh'],
                 'ngay_sinh' => $_POST['ngay_sinh'],
                 'dia_chi'   => $_POST['dia_chi'],
-                'lop'       => $_POST['lop']
+                'lop_id'       => $_POST['lop_id']
             ];
 
             $model = $this->model('sinhvienModel');

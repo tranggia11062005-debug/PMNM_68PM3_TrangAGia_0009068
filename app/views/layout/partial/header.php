@@ -14,10 +14,14 @@
                     Sinh viên
                 </a>
             </li>
+            <li>
+                <a href="/PMNM_68PM3_TrangAGia_0009068/public/LopHoc">
+                    Lớp học
+                </a>
 
             <li>
                 <a href="/PMNM_68PM3_TrangAGia_0009068/public/Home/login">
-                    Đăng nhập
+                    Đăng xuất
                 </a>
             </li>
         </ul>

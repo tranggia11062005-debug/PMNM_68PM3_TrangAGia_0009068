@@ -24,10 +24,13 @@ class sinhvienModel
     // Phân trang + tìm kiếm
     public function paging($limit = 5, $offset = 0, $search = '')
     {
-        $sql = "SELECT * FROM sinhvien
-                WHERE ho_ten LIKE :search
-                ORDER BY id ASC
-                LIMIT :limit OFFSET :offset";
+        // Dùng JOIN để lấy ten_lop thay vì cột lop (text) cũ
+    $sql = "SELECT sv.*, lh.ten_lop 
+            FROM sinhvien sv
+            LEFT JOIN lop_hoc lh ON sv.lop_id = lh.id
+            WHERE sv.ho_ten LIKE :search
+            ORDER BY sv.id ASC
+            LIMIT :limit OFFSET :offset";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':search', "%$search%");
@@ -55,9 +58,9 @@ class sinhvienModel
     public function create($data)
     {
         $sql = "INSERT INTO sinhvien
-                (ma_sv, ho_ten, gioi_tinh, ngay_sinh, dia_chi, lop)
+                (ma_sv, ho_ten, gioi_tinh, ngay_sinh, dia_chi, lop_id)
                 VALUES
-                (:ma_sv, :ho_ten, :gioi_tinh, :ngay_sinh, :dia_chi, :lop)";
+                (:ma_sv, :ho_ten, :gioi_tinh, :ngay_sinh, :dia_chi, :lop_id)";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -67,7 +70,7 @@ class sinhvienModel
             ':gioi_tinh' => $data['gioi_tinh'],
             ':ngay_sinh' => $data['ngay_sinh'],
             ':dia_chi' => $data['dia_chi'],
-            ':lop' => $data['lop']
+            ':lop_id' => $data['lop_id']
         ]);
     }
 
@@ -94,7 +97,7 @@ class sinhvienModel
                 gioi_tinh = :gioi_tinh,
                 ngay_sinh = :ngay_sinh,
                 dia_chi = :dia_chi,
-                lop = :lop
+                lop_id = :lop_id
                 WHERE id = :id";
 
         $stmt = $this->conn->prepare($sql);
@@ -106,7 +109,7 @@ class sinhvienModel
             ':gioi_tinh' => $data['gioi_tinh'],
             ':ngay_sinh' => $data['ngay_sinh'],
             ':dia_chi' => $data['dia_chi'],
-            ':lop' => $data['lop']
+            ':lop_id' => $data['lop_id']
         ]);
     }
 

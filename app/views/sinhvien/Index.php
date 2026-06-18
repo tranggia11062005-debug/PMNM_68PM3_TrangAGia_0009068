@@ -274,7 +274,7 @@
 
                     <td><?= $sv['ho_ten'] ?></td>
 
-                    <td><?= $sv['lop'] ?></td>
+                    <td><?= htmlspecialchars($sv['ten_lop'] ?? 'Chưa có lớp') ?></td>
 
                     <td><?= $sv['ngay_sinh'] ?></td>
 

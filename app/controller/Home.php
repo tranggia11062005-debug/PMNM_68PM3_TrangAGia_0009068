@@ -1,7 +1,7 @@
 <?php
 
-// require_once "../app/models/UserModel.php";
-require_once "../core/Controller.php";
+require_once dirname(__DIR__) . '/models/UserModel.php';
+require_once dirname(__DIR__) . '/core/Controller.php';
 
 class Home extends Controller
 {
@@ -10,12 +10,12 @@ class Home extends Controller
     public function __construct()
     {
         session_start();
-        $this->userModel = new UserModel();
+        $this->userModel = $this->model('UserModel');
     }
 
     public function index()
     {
-        echo "Đây là trang chủ";
+       $this->view('home/HomePage');
     }
 
     public function login()
@@ -48,8 +48,9 @@ class Home extends Controller
 
     public function logout()
     {
-        session_destroy();
-
-        header("Location: /PMNM_68PM3_TrangAGia_0009068/public/Home/login");
+        session_unset(); // Xóa toàn bộ biến session
+    session_destroy(); // Hủy session
+    header("Location: /PMNM_68PM3_TrangAGia_0009068/public/Home/login");
+    exit;
     }
 }

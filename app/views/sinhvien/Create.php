@@ -171,15 +171,17 @@ required>
         </div>
 
         <div class="form-group">
-            <label>Lớp</label>
-
-            <input
-type="text"
-name="lop"
-value="<?= $sinhvien['lop'] ?? '' ?>"
-required>
-
-        </div>
+    <label>Lớp</label>
+    <select name="lop_id" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;" required>
+        <option value="">-- Chọn lớp --</option>
+        <?php foreach($lops as $lop): ?>
+            <option value="<?= $lop['id'] ?>" 
+                <?= (isset($sinhvien) && $sinhvien['lop_id'] == $lop['id']) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($lop['ten_lop']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
 
       <button type="submit">
     <?= $action == "store" ? "Thêm sinh viên" : "Cập nhật" ?>
