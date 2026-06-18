@@ -30,7 +30,7 @@ class Auth extends Controller
             $_SESSION['user'] = $user;
             $_SESSION['username'] = $user['username'];
 
-            header("Location: /PMNM_68PM3_TrangAGia_0009068/public/SinhVien");
+            header("Location: /PMNM_68PM3_TrangAGia_0009068/public/Home/index");
             exit;
         }
 

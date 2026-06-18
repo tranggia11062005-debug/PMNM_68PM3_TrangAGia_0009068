@@ -14,8 +14,11 @@ class Home extends Controller
     }
 
     public function index()
-    {
-       $this->view('home/HomePage');
+    { 
+       $this->view('layout/masterlayout', [
+            'viewname' => 'home/HomePage',
+            'title'    => 'Trang chủ'
+        ]);
     }
 
     public function login()

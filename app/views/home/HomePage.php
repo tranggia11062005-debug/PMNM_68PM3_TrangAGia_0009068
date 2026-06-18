@@ -5,14 +5,19 @@
     <title>Trang Chủ</title>
     </head>
 <body>
-    <?php
-        require '../app/views/layout/partial/header.php';
-        ?>
     <main>
-        <p>Đây là nội dung của trang chủ.</p>
+        <h1>Chào mừng đến hệ thống quản lý sinh viên!</h1>
     </main>
-    <?php
-        require '../app/views/layout/partial/footer.php';
-        ?>
+     
+                <a href="/PMNM_68PM3_TrangAGia_0009068/public/LopHoc">
+                    Quản lý lớp học
+                </a> <br>
+                <br>
+
+          
+                 <a href="/PMNM_68PM3_TrangAGia_0009068/public/SinhVien">
+                    Quản lý sinh viên
+                </a>
+        
 </body>
 </html>

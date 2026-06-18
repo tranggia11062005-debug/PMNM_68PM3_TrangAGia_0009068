@@ -17,10 +17,6 @@
             <input type="text" name="ten_lop" value="<?= $lophoc['ten_lop'] ?? '' ?>" required>
         </div>
 
-        <div class="form-group">
-            <label>Sĩ số</label>
-            <input type="number" name="si_so" value="<?= $lophoc['si_so'] ?? '' ?>" required>
-        </div>
 
         <button type="submit">
             <?= $action == "store" ? "Thêm lớp học" : "Cập nhật lớp" ?>

@@ -27,7 +27,7 @@ class LopHoc extends Controller {
 
     public function store() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = ['ten_lop' => $_POST['ten_lop'], 'si_so' => $_POST['si_so']];
+            $data = ['ten_lop' => $_POST['ten_lop']];
             $this->lopHocModel->add($data); // Lưu ý: hàm trong Model là add()
             header("Location: /PMNM_68PM3_TrangAGia_0009068/public/LopHoc");
         }
@@ -45,7 +45,7 @@ class LopHoc extends Controller {
 
     public function update($id) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = ['ten_lop' => $_POST['ten_lop'], 'si_so' => $_POST['si_so']];
+            $data = ['ten_lop' => $_POST['ten_lop']];
             $this->lopHocModel->update($id, $data);
             header("Location: /PMNM_68PM3_TrangAGia_0009068/public/LopHoc");
         }

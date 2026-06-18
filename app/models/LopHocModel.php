@@ -12,10 +12,11 @@ class LopHocModel {
 
     public function getAll($search = '') {
         // 3. Bây giờ $this->pdo đã có dữ liệu, bạn có thể gọi query()
-        $sql = "SELECT * FROM lop_hoc";
+        $sql = "SELECT lop_hoc.*, COUNT(sinhvien.id) as si_so FROM lop_hoc LEFT JOIN sinhvien ON lop_hoc.id = sinhvien.lop_id";
         if (!empty($search)) {
             $sql .= " WHERE ten_lop LIKE :search";
         }
+        $sql .= " GROUP BY lop_hoc.id";
         $stmt = $this->pdo->prepare($sql);
         if (!empty($search)) {
             $stmt->bindValue(':search', "%$search%");
@@ -26,8 +27,8 @@ class LopHocModel {
     
    public function add($data) {
     // Sửa thành nhận vào mảng $data
-    $stmt = $this->pdo->prepare("INSERT INTO lop_hoc (ten_lop, si_so) VALUES (?, ?)");
-    return $stmt->execute([$data['ten_lop'], $data['si_so']]);
+    $stmt = $this->pdo->prepare("INSERT INTO lop_hoc (ten_lop) VALUES (?)");
+    return $stmt->execute([$data['ten_lop']]);
 }
     public function getById($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM lop_hoc WHERE id = ?");
@@ -38,10 +39,10 @@ class LopHocModel {
     // Debug để kiểm tra xem $data có thực sự là mảng không
     // var_dump($data); die(); 
 
-    $stmt = $this->pdo->prepare("UPDATE lop_hoc SET ten_lop = ?, si_so = ? WHERE id = ?");
+    $stmt = $this->pdo->prepare("UPDATE lop_hoc SET ten_lop = ? WHERE id = ?");
     
     // Đảm bảo bạn đang truy cập mảng với đúng tên key là 'ten_lop' và 'si_so'
-    return $stmt->execute([$data['ten_lop'], $data['si_so'], $id]);
+    return $stmt->execute([$data['ten_lop'], $id]);
 }
     public function delete($id) {
         $stmt = $this->pdo->prepare("DELETE FROM lop_hoc WHERE id = ?");
