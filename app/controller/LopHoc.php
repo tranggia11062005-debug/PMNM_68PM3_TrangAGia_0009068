@@ -7,6 +7,7 @@ class LopHoc extends Controller {
     }
 
     public function index() {
+        $this->checkLogin();
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $data['lophocs'] = $this->lopHocModel->getAll($search);
         $data['title'] = "Quản lý lớp học";

@@ -11,4 +11,13 @@ class Controller
         extract($data);
         require_once '../app/views/' . $viewName . '.php';
     }
+    protected function checkLogin() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user'])) {
+        header("Location: /PMNM_68PM3_TrangAGia_0009068/public/Auth/login");
+        exit;
+    }
+}
 }

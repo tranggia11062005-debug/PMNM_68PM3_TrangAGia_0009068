@@ -51,4 +51,20 @@ class Auth extends Controller
         header("Location: /PMNM_68PM3_TrangAGia_0009068/public/Auth/login");
         exit;
     }
+    public function handleRegister() {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $username = trim($_POST['username']);
+        $password = trim($_POST['password']);
+        $full_name = trim($_POST['full_name']);
+        
+        $userModel = $this->model('UserModel');
+        if ($userModel->register($username, $password, $full_name)) {
+            $_SESSION['success'] = "Đăng ký thành công, hãy đăng nhập!";
+            header("Location: /PMNM_68PM3_TrangAGia_0009068/public/Auth/login");
+        }
+    }
+}
+    public function register() {
+        $this->view('home/register');
+    }
 }

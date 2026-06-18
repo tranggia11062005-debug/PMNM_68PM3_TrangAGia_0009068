@@ -56,6 +56,13 @@
                         <button type="submit" class="btn btn-primary w-100">
                             Đăng nhập
                         </button>
+                        <div style="text-align: center; margin-top: 15px;">
+        <span>Chưa có tài khoản?</span>
+        <a href="/PMNM_68PM3_TrangAGia_0009068/public/Auth/register" 
+           style="color: #0d6efd; text-decoration: none; font-weight: bold;">
+           Đăng ký ngay
+        </a>
+    </div
 
                     </form>
 

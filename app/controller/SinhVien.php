@@ -6,6 +6,7 @@ class SinhVien extends Controller
 {
     public function index()
     {
+        $this->checkLogin();
         $limit = 12;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         if ($page < 1) {
