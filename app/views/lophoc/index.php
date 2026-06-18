@@ -52,6 +52,14 @@
             <?php endif; ?>
         </tbody>
     </table>
+    <div class="pagination">
+    <?php if ($totalPages > 1): ?>
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a href="?page=<?= $i ?><?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" 
+               class="<?= ($i == $page) ? 'active' : '' ?>"> <?= $i ?>
+            </a>
+        <?php endfor; ?>
+    <?php endif; ?>
 </div>
 </body>
 </html>

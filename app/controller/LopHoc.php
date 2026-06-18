@@ -8,13 +8,23 @@ class LopHoc extends Controller {
 
     public function index() {
         $this->checkLogin();
+        $limit = 12;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        if ($page < 1) {
+            $page = 1;
+        }
+        $offset = ($page - 1) * $limit;
+
         $search = isset($_GET['search']) ? $_GET['search'] : '';
-        $data['lophocs'] = $this->lopHocModel->getAll($search);
+        $data['lophocs'] = $this->lopHocModel->getAll($search, $limit, $offset);
         $data['title'] = "Quản lý lớp học";
         $this->view('layout/masterlayout', [
         'viewname' => 'lophoc/index',
         'lophocs'  => $data['lophocs'],
-        'title'    => $data['title']
+        'title'    => $data['title'],
+        'search'   => $search,
+        'currentPage' => $page,
+        'totalPages' => ceil($this->lopHocModel->count($search) / $limit)
     ]);
     }
     public function create() {

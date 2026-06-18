@@ -10,17 +10,24 @@ class LopHocModel {
         $this->pdo = ConnectDB::connect(); 
     }
 
-    public function getAll($search = '') {
+    public function getAll($search = '', $limit = 12, $offset = 0) {
         // 3. Bây giờ $this->pdo đã có dữ liệu, bạn có thể gọi query()
         $sql = "SELECT lop_hoc.*, COUNT(sinhvien.id) as si_so FROM lop_hoc LEFT JOIN sinhvien ON lop_hoc.id = sinhvien.lop_id";
+        $params = [];
         if (!empty($search)) {
             $sql .= " WHERE ten_lop LIKE :search";
+            $params[':search'] = "%$search%";
         }
-        $sql .= " GROUP BY lop_hoc.id";
+        $sql .= " GROUP BY lop_hoc.id ORDER BY lop_hoc.id ASC LIMIT :limit OFFSET :offset";
+        $params[':limit'] = (int)$limit;
+        $params[':offset'] = (int)$offset;
+    
         $stmt = $this->pdo->prepare($sql);
         if (!empty($search)) {
-            $stmt->bindValue(':search', "%$search%");
+            $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
         }
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -47,5 +54,17 @@ class LopHocModel {
     public function delete($id) {
         $stmt = $this->pdo->prepare("DELETE FROM lop_hoc WHERE id = ?");
         return $stmt->execute([$id]);
+    }
+    public function count($search = '') {
+        $sql = "SELECT COUNT(*) FROM lop_hoc";
+        if (!empty($search)) {
+            $sql .= " WHERE ten_lop LIKE :search";
+        }
+        $stmt = $this->pdo->prepare($sql);
+        if (!empty($search)) {
+            $stmt->bindValue(':search', "%$search%");
+        }
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 }
