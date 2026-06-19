@@ -28,12 +28,13 @@ class sinhvienModel
     $sql = "SELECT sv.*, lh.ten_lop 
             FROM sinhvien sv
             LEFT JOIN lop_hoc lh ON sv.lop_id = lh.id
-            WHERE sv.ho_ten LIKE :search
+            WHERE (sv.ho_ten LIKE :search OR sv.ma_sv LIKE :search)
             ORDER BY sv.id ASC
             LIMIT :limit OFFSET :offset";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':search', "%$search%");
+        $searchTerm = "%$search%";
+        $stmt->bindValue(':search', $searchTerm, PDO::PARAM_STR);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
         $stmt->execute();
@@ -41,10 +42,11 @@ class sinhvienModel
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $count = $this->conn->prepare(
-            "SELECT COUNT(*) FROM sinhvien WHERE ho_ten LIKE :search"
+            "SELECT COUNT(*) FROM sinhvien 
+                 WHERE (ho_ten LIKE :search OR ma_sv LIKE :search)"
         );
-        $count->bindValue(':search', "%$search%");
-        $count->execute();
+        $count->bindValue(':search', $searchTerm, PDO::PARAM_STR);
+        $count->execute();  
 
         $total = $count->fetchColumn();
 

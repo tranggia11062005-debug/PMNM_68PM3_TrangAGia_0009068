@@ -210,7 +210,7 @@
             <input
                 type="text"
                 name="search"
-                placeholder="Nhập tên sinh viên..."
+                placeholder="Tìm kiếm sinh viên..."
                 value="<?= htmlspecialchars($search ?? '') ?>">
 
             <button type="submit">

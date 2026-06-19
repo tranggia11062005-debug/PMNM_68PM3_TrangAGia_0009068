@@ -15,7 +15,6 @@ class middleware
     public function checklogout()
     {
         if (isset($_SESSION['username'])) {
-
             header('Location: /home/index');
             exit();
         }
